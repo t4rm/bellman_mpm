@@ -4,7 +4,7 @@ class Graphe {
     private _nbrSommet: number
     private _nbrArc: number
     private _listeArc: Arc[]
-    private _listeSommets: number[]
+    private _listeSommets: string[]
 
     constructor(filePath?: string) {
         this._listeArc = []
@@ -15,7 +15,7 @@ class Graphe {
     public get nbrSommet(): number { return this._nbrSommet }
     public get nbrArc(): number { return this._nbrArc }
     public get listeArc(): Array<Arc> { return this._listeArc }
-    public get listeSommets(): Array<number> { return this._listeSommets }
+    public get listeSommets(): Array<string> { return this._listeSommets }
 
     read(filePath: string): void {
         let lignes = readFileSync(filePath, "utf8").split("\n");
@@ -24,19 +24,18 @@ class Graphe {
         this._nbrArc = parseInt(lignes[0].split(" ")[1])
 
         for (let i = 1; i < lignes.length; i++) {
-            let info = lignes[i].split(" ").map(function (str) {
-                return parseInt(str)
-            })
+            let info = lignes[i].split(" ")
 
-            if (isNaN(info[0])) break;
-            this._listeArc.push(new Arc(info[0], info[1], info[2]))
+            if(info.length == 0) break;
+            this._listeArc.push(new Arc(info[0], info[1], parseInt(info[2])))
             this._listeSommets.push(info[0])
             this._listeSommets.push(info[1])
         }
 
+        console.log(this._listeSommets)
+
         if (this._listeArc.length != this._nbrArc) throw Error("Le nomdre d'arc spécifié et le nombre d'arc réel diffèrent.")
         this._listeSommets = [...new Set(this._listeSommets)]
-        // verif que le nombre de sommet = la liste de somemts uniques 
     }
 
     save(fileName: string): void {
@@ -49,11 +48,18 @@ class Graphe {
         output.end();
     }
 
+    print(): void {
+        console.info(`Liste des Sommets :`)
+        console.log(this.listeSommets)
+        console.info(`Liste des Arcs :`)
+        console.table(this.listeArc)
+    }
+
 }
 
 class GrapheOriente extends Graphe {
 
-    bellman(racine: number, min: boolean) {
+    bellman(racine: number|string, min: boolean) {
         let distance: any = {};
         let predecessor: any = {};
       
@@ -77,7 +83,7 @@ class GrapheOriente extends Graphe {
         for (let { sommet, destination, poids } of this.listeArc) {
           if ((min && distance[sommet] + poids < distance[destination]) ||
               (!min && distance[sommet] + poids > distance[destination])) {
-            throw "Graph contains a negative-weight cycle";
+            throw "Le graphe contient un circuit négatif";
           }
         }
       
@@ -90,25 +96,26 @@ class GrapheOriente extends Graphe {
 }
 
 class Arc {
-    private _sommet: number
-    private _destination: number
+    private _sommet: string
+    private _destination: string
     private _poids: number
 
-    constructor(sommet: number, destination: number, poids: number) {
+    constructor(sommet: string, destination: string, poids: number) {
         this._sommet = sommet
         this._destination = destination
         this._poids = poids
     }
 
-    public get sommet(): number { return this._sommet }
-    public get destination(): number { return this._destination }
+    public get sommet(): string { return this._sommet }
+    public get destination(): string { return this._destination }
     public get poids(): number { return this._poids }
 }
 
 function main(): void {
-    let a = new GrapheOriente("src/graphe/dag/dag_10_1.gr")
+    let a = new GrapheOriente("src/graphe/dag/dag_10_0.gr")
 
-    a.bellman(9, false)
+    a.print()
+    a.bellman("a", true)
 }
 
 main()
