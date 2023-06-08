@@ -1,4 +1,3 @@
-import { readFileSync, createWriteStream } from "fs";
 import { Arc } from "./Arc"
 
 export class Graphe {
@@ -7,45 +6,21 @@ export class Graphe {
     private _listeArc: Arc[]
     private _listeSommets: string[]
 
-    constructor(filePath?: string) {
+    constructor() {
         this._listeArc = []
         this._listeSommets = []
-        if (filePath) this.read(filePath);
     }
 
     public get nbrSommet(): number { return this._nbrSommet }
     public get nbrArc(): number { return this._nbrArc }
     public get listeArc(): Array<Arc> { return this._listeArc }
     public get listeSommets(): Array<string> { return this._listeSommets }
-
-    read(filePath: string): void {
-        let lignes = readFileSync(filePath, "utf8").split("\n");
-        if (!lignes || lignes.length == 0) throw Error("Chemin spécifié incorrect.")
-        this._nbrSommet = parseInt(lignes[0].split(" ")[0])
-        this._nbrArc = parseInt(lignes[0].split(" ")[1])
-
-        for (let i = 1; i < lignes.length; i++) {
-            let info = lignes[i].split(" ")
-
-            if (info.length == 0) break;
-            this._listeArc.push(new Arc(info[0], info[1], parseInt(info[2])))
-            this._listeSommets.push(info[0])
-            this._listeSommets.push(info[1])
-        }
-
-        if (this._listeArc.length != this._nbrArc) throw Error("Le nomdre d'arc spécifié et le nombre d'arc réel diffèrent.")
-        this._listeSommets = [...new Set(this._listeSommets)]
-    }
-
-    save(fileName: string): void {
-        let output = createWriteStream(`./src/graphe/dag/${fileName}.gr`);
-        let text: string = `${this.nbrSommet} ${this.nbrArc}`
-        for (const arc of this.listeArc) {
-            text += `\n${arc.sommet} ${arc.destination} ${arc.poids}`
-        }
-        output.write(text);
-        output.end();
-    }
+    
+    public set listeSommets(array: Array<string>) {this._listeSommets = array}
+    public set nbrSommet(value: number) {this._nbrSommet = value}
+    public set nbrArc(value: number) {this._nbrArc = value}
+    public set listeArc(array: Array<Arc>) {this._listeArc = array}
+    
 
     print(): void {
         console.info(`Liste des Sommets :`)
@@ -54,4 +29,10 @@ export class Graphe {
         console.table(this.listeArc)
     }
 
+    // Créer méthode add/remove Arc
+    // Idem avec Points
+
+    // mettre des checkers dedans d'1 pierre 2 coups
+
+    // liste d'adjacence
 }
