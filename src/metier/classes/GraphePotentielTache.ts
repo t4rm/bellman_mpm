@@ -91,6 +91,16 @@ export class GraphePotentielTache extends GrapheOriente {
         console.info(`Liste des taches critiques : ${dataMargeSorted.join(", ")}`)
         console.info(`Liste des chemins critiques :`)
 
+        let arcCritique = this.listeArc.filter(arc => dataMargeSorted.includes(arc.sommet) && dataMargeSorted.includes(arc.destination))
+        let cheminCritique:string[] = []
+        arcCritique.forEach(arc => {
+            cheminCritique.push(arc.sommet, arc.destination)
+        })
+
+        cheminCritique = [...new Set(cheminCritique)]
+        console.log(`début, ${cheminCritique.join(", ")}, fin`)
+        
+            // listez tous les chemins passant exclusivement par des taches critiques
         // 
 
     } 
