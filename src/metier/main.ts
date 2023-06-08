@@ -8,7 +8,7 @@ function main(): void {
     // a.bellman("a", true)
 
 
-    let b = new GraphePotentielTache("src/graphe/mpm/ee.mpm")
+    let b = new GraphePotentielTache("src/graphe/mpm/graphe_cours.mpm")
 
     b.print()
 }

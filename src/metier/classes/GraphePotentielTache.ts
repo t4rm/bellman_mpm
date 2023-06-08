@@ -75,23 +75,27 @@ export class GraphePotentielTache extends GrapheOriente {
         let dataMaxAntiArbo = this.bellman("fin", false, true)
         let Dmin = dataMaxArbo.distance["fin"]
         let dataTard = Object.fromEntries(Object.entries(dataMaxAntiArbo.distance).map(([key, value]) => [key, Dmin - (value as number)]))
+        let dataMarge = Object.fromEntries(Object.entries(dataTard).map(([key, value]) => [key, (value as number) - dataMaxArbo.distance[key]]))
+        let dataMargeSorted = Object.keys(dataMarge).filter(k => dataMarge[k] === 0 && !["début","fin"].includes(k)).sort()
 
         let mergedData = [
             { valeur: 'Tôt(t)', ...dataMaxArbo.distance },
             { valeur: 'Tard(t)', ...dataTard },
             { valeur: 'm(t)', ...Object.fromEntries(Object.entries(dataMaxArbo.distance).map(([key, value]) =>[key, (this.listeArc.filter(arc => arc.sommet == key)).reduce((min, arc) => {const weight = dataMaxArbo.distance[arc.destination];                return weight < min ? weight : min;}, Number.POSITIVE_INFINITY) - (value as number) - this.listeArc.filter(arc => arc.sommet == key)[0]?.poids||0]))},
-            { valeur: 'M(t)', ...Object.fromEntries(Object.entries(dataTard).map(([key, value]) => [key, (value as number) - dataMaxArbo.distance[key]])) },
+            { valeur: 'M(t)', ...dataMarge },
         ]
 
         console.info(`Durée globale du projet : ${Dmin}`)
-        console.table(mergedData)
+        console.table(mergedData, ["valeur", "début",...this.listeSommets.sort().filter(sommet => !["début","fin"].includes(sommet)), "fin"])
 
-        // renvoyer les taches critik et un chemin crit
+        console.info(`Liste des taches critiques : ${dataMargeSorted.join(", ")}`)
+        console.info(`Liste des chemins critiques :`)
 
-    } // To-Do : Arranger l'ordre de sortie du tableau
+        // 
+
+    } 
 }
 
 
-//output début plus tot, début plus tard, durée globale, chemin critik, tache critique
-//marge libre/margetotale
+// sort by Ordre topologique ?
 
