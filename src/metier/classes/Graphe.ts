@@ -26,7 +26,12 @@ export class Graphe {
 
     public set nbrSommet(value: number) { this._nbrSommet = value }
     public set nbrArc(value: number) { this._nbrArc = value }
-    public set listeArc(array: Array<Arc>) { this._listeArc = array }
+    public set listeArc(array: Array<Arc>) { 
+        this._listeArc = []
+        array.forEach(arc=> {
+            this.ajouterArc(arc)
+        })
+     }
 
     public ajouterSommet(sommets: string[]) {
         sommets = sommets.filter(sommet => sommet != "")
