@@ -12,4 +12,8 @@ export class Arc {
     public get sommet(): string { return this._sommet }
     public get destination(): string { return this._destination }
     public get poids(): number { return this._poids }
+
+    public set sommet(v: string) { this._sommet = v }
+    public set destination(v: string) { this._destination = v }
+    public set poids(v: number) { this._poids = v }
 }

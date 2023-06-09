@@ -1,8 +1,7 @@
 import { readFileSync, createWriteStream } from "fs";
-import { Graphe } from "./Graphe"
-import { GrapheOriente } from "./GrapheOriente"
 import { Arc } from "./Arc"
-import { swap } from "../util/functions"
+import { swap, triTopologique, parcoursProfondeur } from "../util/functions"
+import { GrapheOriente } from "./GrapheOriente";
 
 export class GraphePotentielTache extends GrapheOriente {
 
@@ -13,7 +12,7 @@ export class GraphePotentielTache extends GrapheOriente {
 
     read(filePath: string): void {
         let lignes = readFileSync(filePath, "utf8").split("\n");
-        if (!lignes || lignes.length == 0) throw Error("Chemin spécifié incorrect.")
+        if (!lignes || lignes.length == 0) throw new Error("Chemin spécifié incorrect.")
         this.nbrSommet = parseInt(lignes[0])
 
         for (let i = 1; i < lignes.length; i++) {
@@ -24,29 +23,26 @@ export class GraphePotentielTache extends GrapheOriente {
             swap(info, 0, 1)
 
             if (info.length == 2)
-                this.listeArc.push(new Arc(info[1], "fin", parseInt(info[0])))
+                this.ajouterArc(new Arc(info[1], "fin", parseInt(info[0])))
             else
                 for (let j = 2; j < info.length; j++) {
-                    this.listeArc.push(new Arc(info[1], info[j] || "fin", parseInt(info[0])))
-                    this.listeSommets.push(info[j], info[1])
+                    this.ajouterArc(new Arc(info[1], info[j] || "fin", parseInt(info[0])))
                 }
         }
 
         this.listeArc = this.listeArc.filter(arc => !isNaN(arc.poids))
-        this.listeSommets = [...new Set(this.listeSommets.filter(sommet => sommet !== ""))];
 
-
-        this.listeSommets.filter(sommet => !this.listeArc.map(arc => arc.destination).includes(sommet) && sommet.length > 0).forEach(sommet => {
-            this.listeArc.push(new Arc("début", sommet, 0))
+        this.listeSommets.filter(sommet => !this.listeArc.map(arc => arc.destination).includes(sommet) && sommet.length > 0 && sommet !== "").forEach(sommet => {
+            this.ajouterArc(new Arc("début", sommet, 0))
         })
 
-        this.listeSommets.push("début", "fin")
+        this.ajouterSommet(["début","fin"])
     }
 
 
 
     save(fileName: string): void {
-        let output = createWriteStream(`./src/graphe/mpm/${fileName}.mpm`);
+        let output = createWriteStream(`./src/graphe/export/${fileName}.mpm`);
         let text: string = `${this.nbrSommet}`
 
         this.listeArc = this.listeArc.filter(arc => arc.sommet !== "début").map(arc => new Arc(
@@ -55,9 +51,7 @@ export class GraphePotentielTache extends GrapheOriente {
             arc.poids
         ));
 
-        this.listeSommets = this.listeSommets.filter(sommet => !["début", "fin"].includes(sommet))
-
-        for (const sommet of this.listeSommets) {
+        for (const sommet of this.listeSommets.filter(sommet => !["début", "fin"].includes(sommet))) {
             let arr2 = this.listeArc.filter(arc => arc.sommet == sommet)
             text += (`\n${arr2[0].sommet} ${arr2[0].poids} ${arr2.map(arc => arc.destination).join(" ")}`)
         }
@@ -69,7 +63,7 @@ export class GraphePotentielTache extends GrapheOriente {
 
     print(): void {
         super.print()
-        console.log("-------------------")
+        console.log("%c MPM : ", "color: Green;font-weight:bold; background-color: MediumVioletRed;")
 
         let dataMaxArbo = this.bellman("début", false, false)
         let dataMaxAntiArbo = this.bellman("fin", false, true)
@@ -86,26 +80,19 @@ export class GraphePotentielTache extends GrapheOriente {
         ]
 
         console.info(`Durée globale du projet : ${Dmin}`)
-        console.table(mergedData, ["valeur", "début",...this.listeSommets.sort().filter(sommet => !["début","fin"].includes(sommet)), "fin"])
+        
+        // Afficher les résultats obtenus en triant les sommets par ordre alphabétique/numérique (a, b, c || 1, 2, 3)
+        // console.table(mergedData, ["valeur", "début",...this.listeSommets.sort().filter(sommet => !["début","fin"].includes(sommet)), "fin"])
+        // Ou selon un ordre topologique :
+
+        console.table(mergedData, ["valeur",...triTopologique(this)])
 
         console.info(`Liste des taches critiques : ${dataMargeSorted.join(", ")}`)
         console.info(`Liste des chemins critiques :`)
 
-        let arcCritique = this.listeArc.filter(arc => dataMargeSorted.includes(arc.sommet) && dataMargeSorted.includes(arc.destination))
-        let cheminCritique:string[] = []
-        arcCritique.forEach(arc => {
-            cheminCritique.push(arc.sommet, arc.destination)
-        })
+        let arcCritique = this.listeArc.filter(arc => (dataMargeSorted.includes(arc.sommet) && dataMargeSorted.includes(arc.destination))  || (dataMargeSorted.includes(arc.destination) && arc.sommet === "début")   || (dataMargeSorted.includes(arc.sommet) && arc.destination === "fin"));
 
-        cheminCritique = [...new Set(cheminCritique)]
-        console.log(`début, ${cheminCritique.join(", ")}, fin`)
-        
-            // listez tous les chemins passant exclusivement par des taches critiques
-        // 
+        parcoursProfondeur("début", {}, arcCritique, [],"fin")
 
     } 
 }
-
-
-// sort by Ordre topologique ?
-
