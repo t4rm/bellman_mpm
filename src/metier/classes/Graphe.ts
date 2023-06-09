@@ -103,6 +103,6 @@ export class Graphe {
         
         output.write(text);
         output.end();
-    } // Exporte un graphe dans un fichier JSON qui sera utilisable dans une seconde partie pour afficher le graphe sur une légère application web développée pour répondre à ce besoin. Cela permets de mieux visualiser un graphe afin de comprendre ses algorithmes. Cela a été réalisé en bonus.
+    } // Exporte un graphe dans un fichier JSON qui sera utilisable dans une seconde partie pour afficher le graphe sur une légère application web développée pour répondre à ce besoin. Cela permets de mieux visualiser un graphe afin de comprendre ses algorithmes. Cela a été réalisé en bonus. Tutoriel vidéo : https://cdn.discordapp.com/attachments/1022419294010753096/1116770354887655534/demonstrationWeb.mp4
 
 } 

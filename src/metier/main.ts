@@ -12,6 +12,7 @@ function main(): void {
     graphe.ajouterSommet(["d","z","a"])
     graphe.ajouterArc(new Arc("a","z",26))
 
+    graphe.print()
     // Ce graphe a 3 sommets et un arc de A à Z avec pour poids 26, le sommet D est donc isolé.
 
     // Exemple d'utilisation du programme pour manipuler un graphe orienté que l'on va créer de toutes pièces:
