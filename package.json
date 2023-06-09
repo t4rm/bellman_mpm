@@ -1,15 +1,9 @@
 {
   "dependencies": {
-    "@antv/g6": "^4.8.15",
-    "cytoscape": "^3.25.0",
-    "cytoscape-svg": "^0.4.0",
-    "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
     "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "@types/cytoscape": "^3.19.9",
-    "@types/file-saver": "^2.0.5",
     "@types/node": "^20.2.5"
   }
 }

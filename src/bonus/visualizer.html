@@ -39,18 +39,24 @@
 </head>
 
 <body>
+  <h3>Vous pouvez déplacer les sommets pour faciliter la lecture</h3>
   <div id="myDiagramDiv"></div>
   <label for="file-input">Choisir un fichier pré-formaté :</label>
   <input type="file" id="file-input">
   <pre id="file-content"></pre>
-  <h1>Déplacer les sommets pour faciliter la lecture</h1>
-
+  <h3>Comment formatez un graphe ?</h3>
+  <pre>
+    • Se rendre sur l'application TypeScript
+    • Créer (TOUS) ou lire un graphe (DAG/MPM)
+    • Utiliser la méthode export, présente sur tous les graphes
+    • Sélectionnez le fichier obtenu (dans le répertoire "bonus")
+</pre>
   <script src="https://unpkg.com/gojs"></script>
   <script>
     const myDiagram = new go.Diagram("myDiagramDiv", { "undoManager.isEnabled": true });
 
     myDiagram.nodeTemplate = new go.Node("Auto")
-      .add(new go.Shape("RoundedRectangle", { strokeWidth: 0, fill: "white" }).bind(new go.Binding("fill", "color")))
+      .add(new go.Shape("Circle", { strokeWidth: 0, fill: "white" }).bind(new go.Binding("fill", "color")))
       .add(new go.TextBlock({ margin: 8, stroke: "#333" }).bind(new go.Binding("text", "key")));
 
     document.getElementById('file-input').addEventListener('change', function (e) {
@@ -62,12 +68,11 @@
         document.getElementById('file-content').textContent = content;
         var parsedData = JSON.parse(content);
         myDiagram.model = new go.GraphLinksModel(parsedData.array1, parsedData.array2);
-        console.log(parsedData);
       };
 
       reader.readAsText(file);
     });
   </script>
 </body>
-
+<!-- MECHKENE TAREK -->
 </html>
