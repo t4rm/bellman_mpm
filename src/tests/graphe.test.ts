@@ -101,3 +101,4 @@ test('Méthode export', async () => {
     expect(parsedContent.array1.length).toBe(3);
     expect(parsedContent.array2.length).toBe(2);
 }); // ATTENTION ! Modifie les données dans testData.json
+

@@ -40,7 +40,7 @@ function main(): void {
 
     // Exemple d'utilisation du programme pour réaliser le MPM d'un graphe :
 
-    let graphePotentielTache = new GraphePotentielTache("src/graphe/mpm/graphe_cours.mpm")
+    let graphePotentielTache = new GraphePotentielTache("src/graphe/mpm/graphe_20_1.mpm")
 
     graphePotentielTache.print() // Affiche les résultats du MPM du graphe
     graphePotentielTache.export() // Exporte le graphe pour l'utiliser sur l'application Web Bonus (bonus)

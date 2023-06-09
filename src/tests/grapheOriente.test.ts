@@ -8,7 +8,6 @@ beforeEach(() => {
     grapheOriente = new GrapheOriente();
 });
 
-
 test("Lecture d'un fichier de graphe orienté valide", () => {
     const filePath = "./src/graphe/dag/dag_10_0.gr";
     grapheOriente.read(filePath);
