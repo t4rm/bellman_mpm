@@ -65,6 +65,19 @@ test("Retrait d'un arc de la classe Graphe", () => {
     expect(graphe.adjacence).toEqual({ A: ["C"], B: [], C: [] });
 });
 
+test('Affichage d\'un graphe', () => {
+    graphe.listeArc = [new Arc('A', 'B', 1), new Arc('B', 'C', 1)];
+
+    const consoleInfoSpy = jest.spyOn(console, 'info');
+
+    graphe.print();
+
+    expect(consoleInfoSpy).toHaveBeenCalledTimes(2);
+    expect(consoleInfoSpy).toHaveBeenNthCalledWith(1, 'Liste des Sommets : A, B, C');
+    expect(consoleInfoSpy).toHaveBeenNthCalledWith(2, 'Liste des Arcs :');
+    // On ne peut "espionner" console.table.
+  });
+
 test('Méthode export', async () => {
     graphe.listeArc = [
       new Arc('A', 'B', 1),

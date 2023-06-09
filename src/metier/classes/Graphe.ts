@@ -118,11 +118,12 @@ export class Graphe {
 
         const filePath = `./src/bonus/${fileName??"exportedData"}.json`;
         const text: string = JSON.stringify({ array1, array2 });
-        try {
+        // try {
             writeFileSync(filePath, text);
-        } catch (error) {
-            console.error(`Une erreur s'est produite lors de l'écriture du fichier : ${error}`);
-        }
+        // } catch (error) {
+            // throw new Error (`Une erreur s'est produite lors de l'écriture du fichier : ${error}`);
+        // }
+        // On peut se préparer à recevoir une erreur mais si nos classes sont bien organisées, aucunes erreurs n'est possible.
 
     } // Exporte un graphe dans un fichier JSON qui sera utilisable dans une seconde partie pour afficher le graphe sur une légère application web développée pour répondre à ce besoin. Cela permets de mieux visualiser un graphe afin de comprendre ses algorithmes. Cela a été réalisé en bonus. Tutoriel vidéo : https://cdn.discordapp.com/attachments/1022419294010753096/1116770354887655534/demonstrationWeb.mp4
 
