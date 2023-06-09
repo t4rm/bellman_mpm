@@ -2,7 +2,7 @@ import { Arc } from "./classes/Arc"
 import { Graphe } from "./classes/Graphe"
 import { GrapheOriente } from "./classes/GrapheOriente"
 import { GraphePotentielTache } from "./classes/GraphePotentielTache"
-import { triTopologique } from "./util/functions"
+
 
 function main(): void {
     // let a = new GrapheOriente("src/graphe/dag/dag_10_1.gr")
@@ -11,7 +11,13 @@ function main(): void {
     // console.table(a.bellman("9", true, false))
 
     let b = new GraphePotentielTache("src/graphe/mpm/graphe_cours.mpm")
-    b.print()
+
+    b.export()
+
+    // b.print()
+
+
+    //https://js.cytoscape.org/#core/export
     // b.ajouterArc(new Arc("a","b",1))
     // b.ajouterArc(new Arc("a","d",3)) graphe abstract class cqui est générique ou non
     // b.ajouterArc(new Arc("b","c",3)) graphe dirigé acyclique

@@ -1,4 +1,6 @@
+import { readFileSync, createWriteStream, writeFileSync } from "fs";
 import { Arc } from "./Arc"
+import { colors } from "../util/cssColors"
 
 export class Graphe {
     private _nbrSommet: number
@@ -77,6 +79,30 @@ export class Graphe {
         console.info(`Liste des Sommets : ${this.listeSommets.sort().join(", ")}`)
         console.info(`Liste des Arcs :`)
         console.table(this.listeArc)
+    }
+
+    export():void {
+        let array1:any = []
+        let array2:any = []
+    
+        
+        this.listeSommets.forEach(sommet => {
+            array1.push({key: sommet, color: colors[Math.floor(Math.random() * colors.length)]??"blue"})
+        })
+    
+        this.listeArc.forEach(arc => {
+            array2.push({from: arc.sommet, to: arc.destination})
+        })
+              
+        console.info(`Votre graphe est visualisable ici : "./src/test/visualizer.html"`)
+        // const jsonContent = JSON.stringify({array1, array2});
+
+        let output = createWriteStream(`./src/bonus/exportedData.json`);
+        let text: string = `${JSON.stringify({array1,array2})}`
+        
+        output.write(text);
+        output.end();
+
     }
 
 } //  abstract class
