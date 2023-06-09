@@ -39,17 +39,22 @@ export class Graphe {
     } // Ajoute un sommet au graphe tout en vérifiant qu'il n'y est pas déjà présent
  
     public retirerSommet(sommet: string) {
-        if (this._listeSommets.includes(sommet)) {
+        if (this._listeSommets.includes(sommet)) {0
             this._listeSommets.splice(this._listeSommets.indexOf(sommet), 1)
             this._listeArc = this._listeArc.filter(arc => arc.sommet != sommet && arc.destination != sommet)
         }
     } // Retire un sommet tout en vérifiant qu'il y figure
 
     public ajouterArc(arc: Arc) {
-        if(arc.sommet.length == 0) throw new Error("INVALIDE | Un arc doit avoir un sommet. ")
-        if (!this._listeArc.includes(arc)) {
+        if(arc.sommet.length === 0) throw new Error("INVALIDE | Un arc doit avoir un sommet. ")
+        
+        if (!this._listeArc.some(
+            (a) =>
+              a.sommet === arc.sommet &&
+              a.destination === arc.destination &&
+              a.poids === arc.poids
+          )) {
             this._listeArc.push(arc);
-
             this.ajouterSommet([arc.sommet, arc.destination])
             this._adjacence[arc.sommet].push(arc.destination)
         }

@@ -4,7 +4,7 @@ let arc = new Arc("sommet", "destination", 5);
 
 // Test du sommet
 test("Setter de la classe Arc.sommet avec une valeur vide", () => {
-    expect(() => arc.sommet = "").toThrow(/petit/)
+    expect(() => arc.sommet = "").toThrow(/vide/)
 });
 
 test("Setter de la classe Arc.sommet avec une valeur non vide", () => {
@@ -14,7 +14,7 @@ test("Setter de la classe Arc.sommet avec une valeur non vide", () => {
 
 // Test de la destination
 test("Setter de la classe Arc.destination avec une valeur vide", () => {
-    expect(() => arc.destination = "").toThrow(/petit/)
+    expect(() => arc.destination = "").toThrow(/vide/)
 });
 
 test("Setter de la classe Arc.destination avec une valeur non vide", () => {
