@@ -37,4 +37,4 @@ Des tests unitaires figurent dans ce projet afin de s'assurer du bon fonctionnem
 npm run tests
 ```
 
-*Comme ceci a été fais en bonus, nous nous permettons d'ajouter les tests unitaires restants ultérieurement, le coverage actuel est suffisant mais peut être amélioré.*
+*Ce projet peut être amené à être retravaillé et amélioré à l'avenir, d'autres algorithmes, types de graphes, etc, peuvent être implémentés.*
