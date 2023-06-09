@@ -1,5 +1,6 @@
 import { Graphe } from "../metier/classes/Graphe"
 import { Arc } from "../metier/classes/Arc"
+import fs from 'fs';
 
 let graphe: Graphe;
 
@@ -20,6 +21,16 @@ test("Setter de la liste d'arcs de la classe Graphe", () => {
 
     expect(graphe.listeArc).toEqual(listeArc);
 });
+
+test("Setter listeSommet", () => {
+    const graphe = new Graphe();
+    const array = ["A", "B", "C"];
+
+    graphe.listeSommet = array;
+
+    expect(graphe.listeSommets).toEqual(array);
+});
+
 
 test("Ajout d'un arc vide à la classe Graphe", () => {
     expect(() => graphe.ajouterArc(new Arc("", "", 0))).toThrow(/sommet/);
@@ -53,3 +64,27 @@ test("Retrait d'un arc de la classe Graphe", () => {
     expect(graphe.listeSommets).toEqual(["A", "B", "C"]);
     expect(graphe.adjacence).toEqual({ A: ["C"], B: [], C: [] });
 });
+
+test('Méthode export', async () => {
+    graphe.listeArc = [
+      new Arc('A', 'B', 1),
+      new Arc('B', 'C', 1),
+    ];
+  
+    const exportPromise = new Promise<void>((resolve) => {
+        graphe.export("testData");
+        resolve();
+      });
+    
+      await exportPromise;
+
+    const fileContent = await fs.promises.readFile('./src/bonus/testData.json', 'utf-8');
+    const parsedContent = JSON.parse(fileContent);
+
+    expect(parsedContent).toEqual({
+      array1: expect.any(Array),
+      array2: expect.any(Array),
+    });
+    expect(parsedContent.array1.length).toBe(3);
+    expect(parsedContent.array2.length).toBe(2);
+}); // ATTENTION ! Modifie les données dans testData.json
