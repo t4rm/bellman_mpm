@@ -10,6 +10,7 @@
     "@types/node": "^20.2.5"
   },
   "scripts": {
-    "tests": "npx jest"
+    "tests": "npx jest",
+    "main":"npx ts-node ./src/metier/main.ts"
   }
 }
