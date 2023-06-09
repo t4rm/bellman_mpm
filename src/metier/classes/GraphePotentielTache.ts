@@ -11,7 +11,7 @@ export class GraphePotentielTache extends GrapheOrienteAcyclique {
     }
 
     read(filePath: string): void {
-        let lignes = readFileSync(filePath, "utf8").split("\n");
+        let lignes = readFileSync(filePath, "utf8").trim().split("\n");
         if (!lignes || lignes.length <= 1) throw new Error("Chemin spécifié incorrect.")
         this.nbrSommet = parseInt(lignes[0])
 
