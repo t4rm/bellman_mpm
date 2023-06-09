@@ -38,7 +38,6 @@ export class GrapheOrienteAcyclique extends GrapheOriente {
         for (let { sommet, destination, poids } of virtualListeArc) {
             const expression = min ? distance[sommet] + poids < distance[destination] : distance[sommet] + poids > distance[destination]
             if (expression) throw new Error("Le graphe contient un circuit négatif"); // Cette vérification permets de ne pas avoir à effectuer de Tri Topologique pour le traitement 
-            console.log(expression)
         }
 
         return { distance, predecesseur };

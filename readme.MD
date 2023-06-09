@@ -34,6 +34,8 @@ let graphePotentielTache = new GraphePotentielTache("src/graphe/mpm/graphe_cours
 graphePotentielTache.print() // Affiche les résultats du MPM du graphe
 graphePotentielTache.export() // Exporte le graphe pour l'utiliser sur l'application Web Bonus (bonus)
 ```
+## UML
+Les diagrammes UML sont diponibles dans le dossier ***"uml"*** sous format PDF et PNG (pour pouvoir zoomer) et Mermaid (Live Editor).
 
 ## Test Unitaire
 
@@ -41,3 +43,5 @@ Des tests unitaires figurent dans ce projet afin de s'assurer du bon fonctionnem
 ```bash
 npm run tests
 ```
+
+*Comme ceci a été fais en bonus, nous nous permettons d'ajouter les tests unitaires restants ultérieurement, le coverage actuel est suffisant mais peut être amélioré.*

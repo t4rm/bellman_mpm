@@ -1,0 +1,45 @@
+classDiagram
+    Graphe <|-- GrapheOriente: 0..n
+    GrapheOriente <|-- GrapheOrienteAcyclique: 0..n
+    GrapheOrienteAcyclique <|-- GraphePotentielTache: 0..n
+    Arc --> Graphe: compose
+
+class Graphe{
+    -nbrSommet: number
+    - nbrArc: number
+    -listeArc: Arc[]
+    -listeSommets: string[]
+    -adjacence: Object ([sommet: string]: string[])
+    +Graphe()
+    +ajouterSommet(sommets: string[])
+    +retirerSommet(sommet: string)
+    +ajouterArc(arc: Arc)
+    +retirerArc(sommet: string, destination: string, poids: number)
+    +print()
+    +export()
+}
+
+class Arc{
+    -sommet:string
+    -destination:string
+    -poids:number
+    +Arc(sommet: string,destination: string,poids: number)
+}
+
+class GrapheOriente{
+    +GrapheOriente(filePath?:string)
+    +read(filePath: string):void
+    +save(fileName: string):void
+}
+
+class GrapheOrienteAcyclique{
+    +GrapheOrienteAcyclique(filePath? :string)
+    +bellman(racine: number | string, min: boolean, anti: boolean)
+}
+
+class GraphePotentielTache {
+    +GraphePotentielTache(filePath?:string)
+    +read(filePath: string):void
+    +save(fileName: string):void
+    +print():void
+}
