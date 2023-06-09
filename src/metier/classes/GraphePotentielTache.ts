@@ -1,10 +1,10 @@
 import { readFileSync, createWriteStream } from "fs";
 import { Arc } from "./Arc"
 import { swap, triTopologique, parcoursProfondeur } from "../util/functions"
-import { GrapheOriente } from "./GrapheOriente";
+import { GrapheOrienteAcyclique } from "./GrapheOrienteAcyclique";
 
-export class GraphePotentielTache extends GrapheOriente {
-
+export class GraphePotentielTache extends GrapheOrienteAcyclique {
+// Définition de la classe à partir d'un Graphe Orienté Acyclique
     constructor(filePath?: string) {
         super()
         if (filePath) this.read(filePath);
@@ -37,7 +37,7 @@ export class GraphePotentielTache extends GrapheOriente {
         })
 
         this.ajouterSommet(["début","fin"])
-    }
+    } // Un graphe potentiel tache se lit autrement, la méthode read est donc modifiée en conséquence
 
 
 
@@ -58,7 +58,7 @@ export class GraphePotentielTache extends GrapheOriente {
 
         output.write(text);
         output.end();
-    } // Optimisation possible ?
+    } // Enregistre de la bonne manière un fichier .mpm correspondant au graphe potentiel tache.
 
 
     print(): void {
@@ -94,5 +94,5 @@ export class GraphePotentielTache extends GrapheOriente {
 
         parcoursProfondeur("début", {}, arcCritique, [],"fin")
 
-    } 
+    } // Affiche les résultats MPM d'un graphe potentiel tache sous forme de tableau comportant Date au plus Tard, au plus Tôt, Marge Totale, Marge Libre pour chaque sommet ainsi que la durée globale du projet, les taches critiques et le/les chemins critiques.
 }

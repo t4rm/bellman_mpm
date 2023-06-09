@@ -35,13 +35,19 @@
       padding: 10px;
       border: 1px solid #ccc;
     }
+
+    p {
+      font-weight: lighter;
+      font-style: italic;
+      font-size: small;
+    }
   </style>
 </head>
 
 <body>
-  <h3>Vous pouvez déplacer les sommets pour faciliter la lecture</h3>
+  <h3>SAE x GoJS : Visualisez vos fichiers abstraits</h3>
   <div id="myDiagramDiv"></div>
-  <label for="file-input">Choisir un fichier pré-formaté :</label>
+  <label>Choisir un fichier pré-formaté :</label>
   <input type="file" id="file-input">
   <pre id="file-content"></pre>
   <h3>Comment formatez un graphe ?</h3>
@@ -51,6 +57,16 @@
     • Utiliser la méthode export, présente sur tous les graphes
     • Sélectionnez le fichier obtenu (dans le répertoire "bonus")
 </pre>
+  <h3>Commandes :</h3>
+  <pre>
+  • Les commandes claviers de base (CTRL + X, CTRL + C, CTRL + V, CTRL + Z, CTRL + A)
+  • Séléctionnez un sommet/arc PUIS Espace -> Centrer le graphe sur ce sommet
+  • Cliquer et glisser -> Se déplacer / Déplacer un sommet
+  • Molette de la souris -> Déplacer l'écran
+  • CTRL + Molette -> Zoomer/Dézoomer
+</pre>
+  <p>Amélioration possible: Enregistre un graphe après l'avoir modifié sur cette application Web, de manière à pouvoir
+    utiliser l'application TypeScript sur le nouveau graphe.</p>
   <script src="https://unpkg.com/gojs"></script>
   <script>
     const myDiagram = new go.Diagram("myDiagramDiv", { "undoManager.isEnabled": true });
@@ -75,4 +91,5 @@
   </script>
 </body>
 <!-- MECHKENE TAREK -->
+
 </html>

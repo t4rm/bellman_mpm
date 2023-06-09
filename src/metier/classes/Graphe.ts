@@ -1,8 +1,11 @@
 import { readFileSync, createWriteStream, writeFileSync } from "fs";
 import { Arc } from "./Arc"
 import { colors } from "../util/cssColors"
+import { triTopologique } from "../util/functions";
 
+// La classe Graphe aurait pu être une classe abstraite cependant nous la gérons autrement. En effet, les méthodes d'ajouts et de retraits d'arc sont les mêmes pour tous les graphes et tous les graphes fonctionnent de cette manière, si le graphe est pondéré alors une pondération nulle peut être mise en place.
 export class Graphe {
+    // Définition de la classe, son constructeur et ses getters/setters
     private _nbrSommet: number
     private _nbrArc: number
     private _listeArc: Arc[]
@@ -21,7 +24,6 @@ export class Graphe {
     public get listeSommets(): Array<string> { return this._listeSommets }
     public get adjacence(): { [sommet: string]: Array<string> } { return this._adjacence }
 
-    // public set listeSommets(array: Array<string>) { this._listeSommets = array }
     public set nbrSommet(value: number) { this._nbrSommet = value }
     public set nbrArc(value: number) { this._nbrArc = value }
     public set listeArc(array: Array<Arc>) { this._listeArc = array }
@@ -33,14 +35,14 @@ export class Graphe {
                 this._adjacence[sommet] = [];
             }
         }
-    }
-
+    } // Ajoute un sommet au graphe tout en vérifiant qu'il n'y est pas déjà présent
+ 
     public retirerSommet(sommet: string) {
         if (this._listeSommets.includes(sommet)) {
             this._listeSommets.splice(this._listeSommets.indexOf(sommet), 1)
             this._listeArc = this._listeArc.filter(arc => arc.sommet != sommet && arc.destination != sommet)
         }
-    }
+    } // Retire un sommet tout en vérifiant qu'il y figure
 
     public ajouterArc(arc: Arc) {
         if (!this._listeArc.includes(arc)) {
@@ -49,7 +51,7 @@ export class Graphe {
             this.ajouterSommet([arc.sommet, arc.destination])
             this._adjacence[arc.sommet].push(arc.destination)
         }
-    }
+    } // Ajoute un arc et ses sommets au graphe
 
     public retirerArc(sommet: string, destination: string, poids: number) {
         const index = this._listeArc.findIndex(arc => arc.sommet === sommet && arc.destination === destination && arc.poids === poids);
@@ -72,20 +74,20 @@ export class Graphe {
                 }
             }
         }
-    }
+    } // Retire un arc et l'adjacence des sommets concernés
 
 
     print(): void {
-        console.info(`Liste des Sommets : ${this.listeSommets.sort().join(", ")}`)
+        console.info(`Liste des Sommets : ${triTopologique(this).join(", ")}`)
+        
         console.info(`Liste des Arcs :`)
         console.table(this.listeArc)
-    }
+    } // Affiche les informations basiques d'un graphe de manière textuel
 
     export():void {
         let array1:any = []
         let array2:any = []
     
-        
         this.listeSommets.forEach(sommet => {
             array1.push({key: sommet, color: colors[Math.floor(Math.random() * colors.length)]??"blue"})
         })
@@ -94,15 +96,13 @@ export class Graphe {
             array2.push({from: arc.sommet, to: arc.destination})
         })
               
-        console.info(`Votre graphe est visualisable ici : "./src/test/visualizer.html"`)
-        // const jsonContent = JSON.stringify({array1, array2});
+        console.info(`Votre graphe a été exporté dans le dossier "./src/bonus/", veuillez-vous rendre sur "./src/bonus/visualizer.html" pour lire ce fichier.`)
 
         let output = createWriteStream(`./src/bonus/exportedData.json`);
         let text: string = `${JSON.stringify({array1,array2})}`
         
         output.write(text);
         output.end();
+    } // Exporte un graphe dans un fichier JSON qui sera utilisable dans une seconde partie pour afficher le graphe sur une légère application web développée pour répondre à ce besoin. Cela permets de mieux visualiser un graphe afin de comprendre ses algorithmes. Cela a été réalisé en bonus.
 
-    }
-
-} //  abstract class
+} 
