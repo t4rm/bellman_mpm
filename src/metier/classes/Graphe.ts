@@ -32,6 +32,11 @@ export class Graphe {
             this.ajouterArc(arc)
         })
      }
+    public set listeSommet(array: string[]) {
+        this._listeSommets = []
+        this.ajouterSommet(array)
+    }
+
 
     public ajouterSommet(sommets: string[]) {
         sommets = sommets.filter(sommet => sommet != "")

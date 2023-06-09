@@ -35,8 +35,8 @@ export function parcoursProfondeur(sommet: string, visite: { [sommet: string]: b
             }
         }
 
-        cheminActuel.pop();
         visite[sommet] = false;
+        cheminActuel.pop();
     } else {
         visite[sommet] = true;
 
@@ -47,6 +47,7 @@ export function parcoursProfondeur(sommet: string, visite: { [sommet: string]: b
         }
         cheminActuel.push(sommet);
     }
+
 
 } // Effectue l'algorithme de Parcours en Profondeur pour récupérer l'ordre topologique ou tous les chemins possible entre deux sommets d'un graphe
 
