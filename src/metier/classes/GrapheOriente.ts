@@ -12,7 +12,7 @@ export class GrapheOriente extends Graphe {
 
     read(filePath: string): void {
         let lignes = readFileSync(filePath, "utf8").split("\n");
-        if (!lignes || lignes.length == 0) throw new Error("Chemin spécifié incorrect.")
+        if (!lignes || lignes.length == 0) throw new Error(`Chemin spécifié incorrect ${filePath}.`)
         this.nbrSommet = parseInt(lignes[0].split(" ")[0])
         this.nbrArc = parseInt(lignes[0].split(" ")[1])
 

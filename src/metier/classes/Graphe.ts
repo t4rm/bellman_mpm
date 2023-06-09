@@ -29,6 +29,7 @@ export class Graphe {
     public set listeArc(array: Array<Arc>) { this._listeArc = array }
 
     public ajouterSommet(sommets: string[]) {
+        sommets = sommets.filter(sommet => sommet != "")
         for (const sommet of sommets) {
             if (!this._listeSommets.includes(sommet)) {
                 this._listeSommets.push(sommet);
@@ -45,6 +46,7 @@ export class Graphe {
     } // Retire un sommet tout en vérifiant qu'il y figure
 
     public ajouterArc(arc: Arc) {
+        if(arc.sommet.length == 0) throw new Error("INVALIDE | Un arc doit avoir un sommet. ")
         if (!this._listeArc.includes(arc)) {
             this._listeArc.push(arc);
 
