@@ -2,8 +2,6 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "jest": "^29.5.0",
-    "mock-fs": "^5.2.0",
-    "tmp": "^0.2.1",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   },
@@ -11,9 +9,7 @@
     "@types/fs-extra": "^11.0.1",
     "@types/jest": "^29.5.2",
     "@types/mock-fs": "^4.13.1",
-    "@types/node": "^20.2.5",
-    "@types/tmp": "^0.2.3",
-    "fs-extra": "^11.1.1"
+    "@types/node": "^20.2.5"
   },
   "scripts": {
     "tests": "npx jest",
